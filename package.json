@@ -1,0 +1,86 @@
+{
+  "name": "aws-lambda-weather-forecast",
+  "version": "1.0.0",
+  "description": "An example of usage AWS Lambda function for checking the weather forecast",
+  "main": "app.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "lint": "npx eslint . --ext .ts",
+    "lint:fix": "npx eslint . --ext .ts --fix",
+    "test": "npx jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:maidanskyi/aws-lambda-weather-forecast.git"
+  },
+  "keywords": [
+    "weather",
+    "forecast",
+    "lambda",
+    "serverless"
+  ],
+  "author": "Roman Maidanskyi",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.4",
+    "express": "^4.17.1",
+    "serverless-http": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.83",
+    "@types/axios": "^0.14.0",
+    "@types/express": "^4.17.13",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.9.1",
+    "@typescript-eslint/eslint-plugin": "^4.31.1",
+    "@typescript-eslint/parser": "^4.31.1",
+    "eslint": "^7.32.0",
+    "husky": "^7.0.2",
+    "jest": "^27.2.0",
+    "ts-jest": "^27.0.5",
+    "typescript": "^4.4.3"
+  },
+  "jest": {
+    "verbose": true,
+    "preset": "ts-jest",
+    "testMatch": [
+      "**/?(*.)+(spec|test).[jt]s?(x)"
+    ],
+    "transform": {
+      ".+\\.tsx?$": "ts-jest"
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "@typescript-eslint/no-explicit-any": 1,
+      "@typescript-eslint/no-unused-vars": "error",
+      "comma-dangle": [
+        "error",
+        {
+          "arrays": "always-multiline",
+          "objects": "always-multiline",
+          "functions": "always-multiline"
+        }
+      ]
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test && npm run lint"
+    }
+  }
+}
