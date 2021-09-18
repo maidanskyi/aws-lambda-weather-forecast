@@ -4,7 +4,9 @@
   "description": "An example of usage AWS Lambda function for checking the weather forecast",
   "main": "app.ts",
   "scripts": {
+    "auth": "npx sls config credentials",
     "build": "npx tsc",
+    "deploy": "npx sls deploy -v",
     "lint": "npx eslint . --ext .ts",
     "lint:fix": "npx eslint . --ext .ts --fix",
     "test": "npx jest"
@@ -37,6 +39,7 @@
     "eslint": "^7.32.0",
     "husky": "^7.0.2",
     "jest": "^27.2.0",
+    "serverless": "^2.59.0",
     "ts-jest": "^27.0.5",
     "typescript": "^4.4.3"
   },
