@@ -25,7 +25,4 @@ app.use((err: unknown, _req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-
-export const sum = (a: number, b: number): number => a + b;
-
 export default app;
