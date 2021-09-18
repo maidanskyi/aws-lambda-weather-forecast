@@ -2,13 +2,15 @@
   "name": "aws-lambda-weather-forecast",
   "version": "1.0.0",
   "description": "An example of usage AWS Lambda function for checking the weather forecast",
-  "main": "app.ts",
+  "main": "src/server.ts",
   "scripts": {
     "auth": "npx sls config credentials",
     "build": "npx tsc",
     "deploy": "npx sls deploy -v",
     "lint": "npx eslint . --ext .ts",
-    "lint:fix": "npx eslint . --ext .ts --fix",
+    "lint:fix": "npm run lint -- --fix",
+    "server": "node -r ts-node/register -r dotenv/config ./src/server.ts",
+    "server:dev": "npx nodemon -r dotenv/config ./src/server.ts",
     "test": "npx jest"
   },
   "repository": {
@@ -26,6 +28,9 @@
   "dependencies": {
     "axios": "^0.21.4",
     "express": "^4.17.1",
+    "inversify": "^5.1.1",
+    "inversify-express-utils": "^6.3.2",
+    "reflect-metadata": "^0.1.13",
     "serverless-http": "^2.7.0"
   },
   "devDependencies": {
@@ -36,12 +41,19 @@
     "@types/node": "^16.9.1",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
+    "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
     "husky": "^7.0.2",
     "jest": "^27.2.0",
+    "nodemon": "^2.0.12",
     "serverless": "^2.59.0",
     "ts-jest": "^27.0.5",
+    "ts-node": "^10.2.1",
     "typescript": "^4.4.3"
+  },
+  "engines": {
+    "node": "14.17.0",
+    "npm": "6.14.13"
   },
   "jest": {
     "verbose": true,
@@ -70,7 +82,10 @@
         "single"
       ],
       "@typescript-eslint/no-explicit-any": 1,
-      "@typescript-eslint/no-unused-vars": "error",
+      "@typescript-eslint/semi": [
+        "error"
+      ],
+      "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
       "comma-dangle": [
         "error",
         {
@@ -85,5 +100,16 @@
     "hooks": {
       "pre-commit": "npm test && npm run lint"
     }
+  },
+  "nodemonConfig": {
+    "delay": 5000,
+    "watch": [
+      "src"
+    ],
+    "ext": "ts,js,json",
+    "ignore": [
+      "**/*.test.*",
+      "**/*.spec.*"
+    ]
   }
 }
