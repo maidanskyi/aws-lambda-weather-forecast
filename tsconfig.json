@@ -2,7 +2,6 @@
   "compilerOptions": {
     /* Language and Environment */
     "target": "es2020",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "types": ["reflect-metadata"],
 
     /* Modules */
     "module": "commonjs",                                /* Specify what module code is generated. */
