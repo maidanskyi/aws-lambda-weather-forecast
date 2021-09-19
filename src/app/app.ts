@@ -3,11 +3,15 @@ import './controllers';
 import { Application, NextFunction, Request, Response } from 'express';
 import { InversifyExpressServer } from 'inversify-express-utils';
 import { container } from './ioc';
+import helmet from 'helmet';
 import { HttpException } from './exceptions';
 
 const server = new InversifyExpressServer(container);
 
 export const app = server
+  .setConfig((app: Application) => {
+    app.use(helmet());
+  })
   .setErrorConfig((app: Application) => {
     app.use((req: Request, res: Response, next: NextFunction) => {
       next(new HttpException(404, 'Not Found'));
