@@ -1,9 +1,10 @@
 import 'reflect-metadata';
-import './controllers';
 import { Application, NextFunction, Request, Response } from 'express';
 import { InversifyExpressServer } from 'inversify-express-utils';
+
 import { container } from './ioc';
 import { HttpException } from './exceptions';
+import './components';
 
 const server = new InversifyExpressServer(container);
 
