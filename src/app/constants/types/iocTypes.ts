@@ -1,4 +1,3 @@
 export const TYPES = {
-  envConfigService: Symbol.for('envConfigService'),
-  secretService: Symbol.for('secretService'),
+  pinoConsoleLogger: Symbol.for('pinoConsoleLogger'),
 };
