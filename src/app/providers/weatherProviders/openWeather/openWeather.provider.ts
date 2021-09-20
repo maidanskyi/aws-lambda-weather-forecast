@@ -4,13 +4,13 @@ import { injectable, inject } from 'inversify';
 import {
   Loggable,
   WeatherForecastGettable
-} from '../../interfaces';
+} from '../../../interfaces';
 import {
   WeatherByCityIdType,
   WeatherByZipCodeType
-} from '../../types';
-import { HttpException } from '../../exceptions';
-import { TYPES } from '../../constants';
+} from '../../../types';
+import { HttpException } from '../../../exceptions';
+import { TYPES } from '../../../constants';
 
 /**
  * Open Weather provider
