@@ -1,14 +1,23 @@
-import { injectable } from 'inversify';
+import { injectable, inject } from 'inversify';
 import pinoFactory, { Logger } from 'pino';
-import { Loggable } from '../../interfaces';
+
+import {
+  EnvConfigReadable,
+  Loggable
+} from '../../interfaces';
+import { TYPES } from '../../constants';
 
 @injectable()
 export class PinoConsoleLoggerProvider implements Loggable {
   private readonly pinoLogger: Logger;
+  private readonly envConfigProvider: EnvConfigReadable;
 
-  constructor() {
+  constructor(
+    @inject(TYPES.envConfig) envConfigProvider: EnvConfigReadable,
+  ) {
+    this.envConfigProvider = envConfigProvider;
     this.pinoLogger = pinoFactory({
-      level: process.env['LOG_LEVEL'] || 'info',
+      level: this.envConfigProvider.getLogLevel(),
     });
   }
 
