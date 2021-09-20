@@ -4,11 +4,13 @@ import { TYPES } from '../constants';
 import {
   EnvConfigReadable,
   Loggable,
-  SecretReadable
+  SecretReadable,
+  WeatherForecastGettable
 } from '../interfaces';
 import {
   AwsSecretManagerProvider,
   EnvConfigurationProvider,
+  OpenWeatherProvider,
   PinoConsoleLoggerProvider
 } from '../providers';
 
@@ -21,6 +23,10 @@ container
 container
   .bind<EnvConfigReadable>(TYPES.envConfig)
   .to(EnvConfigurationProvider);
+
+container
+  .bind<WeatherForecastGettable>(TYPES.openWeather)
+  .to(OpenWeatherProvider);
 
 container
   .bind<Loggable>(TYPES.pinoConsoleLogger)
