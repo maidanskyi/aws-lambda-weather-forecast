@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
-import { EnvConfigReadable } from '../../interfaces';
-import { HttpException } from '../../exceptions';
-import { LogLevel } from '../../types';
+import { EnvConfigReadable } from '../../../interfaces';
+import { HttpException } from '../../../exceptions';
+import { LogLevel } from '../../../types';
 
 /**
  * Environment Config Provider

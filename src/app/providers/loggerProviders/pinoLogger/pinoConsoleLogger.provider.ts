@@ -4,8 +4,8 @@ import pinoFactory, { Logger } from 'pino';
 import {
   EnvConfigReadable,
   Loggable
-} from '../../interfaces';
-import { TYPES } from '../../constants';
+} from '../../../interfaces';
+import { TYPES } from '../../../constants';
 
 @injectable()
 export class PinoConsoleLoggerProvider implements Loggable {

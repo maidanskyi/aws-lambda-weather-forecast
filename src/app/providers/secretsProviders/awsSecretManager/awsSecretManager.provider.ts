@@ -1,9 +1,9 @@
 import { injectable, inject } from 'inversify';
 import { SecretsManager } from '@aws-sdk/client-secrets-manager';
 
-import { TYPES } from '../../constants';
-import { HttpException } from '../../exceptions';
-import { SecretReadable, Loggable } from '../../interfaces';
+import { TYPES } from '../../../constants';
+import { HttpException } from '../../../exceptions';
+import { SecretReadable, Loggable } from '../../../interfaces';
 
 /**
  * AWS Secrets Manager provider
