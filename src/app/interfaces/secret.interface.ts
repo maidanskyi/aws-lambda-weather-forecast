@@ -1,4 +1,8 @@
+/* eslint-disable no-unused-vars */
+
 export interface SecretReadable {
-  // eslint-disable-next-line no-unused-vars
-  getSecretByKey(key: string): Promise<string>
+  getSecretsByName(
+    secretId: string,
+    region: string,
+  ): Promise<Record<string, string>>
 }
