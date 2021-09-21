@@ -28,6 +28,39 @@ export class EnvConfigurationProvider implements EnvConfigReadable {
   }
 
   /**
+   * Returns Open Weather apiKey
+   */
+  public getWeatherApiKeyAttributeName(): string {
+    const apiKey = process.env['WEATHER_API_KEY_ATTRIBUTE_NAME'];
+
+    if (!apiKey) {
+      throw new HttpException(
+        500,
+        'WEATHER_API_KEY_ATTRIBUTE_NAME env variable is required',
+      );
+    }
+
+    return apiKey;
+  }
+
+  /**
+   * Returns weather secrets
+   * For dev mode purposes
+   */
+  public getWeatherSecrets(): string {
+    const weatherSecrets = process.env['WEATHER_SECRETS'];
+
+    if (!weatherSecrets) {
+      throw new HttpException(
+        500,
+        'WEATHER_SECRETS env variable is required',
+      );
+    }
+
+    return weatherSecrets;
+  }
+
+  /**
    * Returns AWS region
    */
   public getTableName(): string {
@@ -61,7 +94,7 @@ export class EnvConfigurationProvider implements EnvConfigReadable {
    * Returns NODE_ENV
    */
   public getNodeEnv(): string {
-    let nodeEnv = process.env['LOG_LEVEL'];
+    let nodeEnv = process.env['NODE_ENV'];
     const validEnvs = new Set(['production', 'dev', 'test']);
 
     if (!nodeEnv || !validEnvs.has(nodeEnv)) {

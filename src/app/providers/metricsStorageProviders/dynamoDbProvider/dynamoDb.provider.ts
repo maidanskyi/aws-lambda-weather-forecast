@@ -101,6 +101,8 @@ export class DynamoDbProvider implements MetricPublishable, MetricReadable {
 
     try {
       await this.dbService.updateItem(params);
+
+      this.loggerService.info('Failure metrics successfully updated');
     } catch (err) {
       const errorMessage = 'Unable to update failure metrics';
 
@@ -111,8 +113,6 @@ export class DynamoDbProvider implements MetricPublishable, MetricReadable {
         this.loggerService.error(errorMessage);
       }
     }
-
-    this.loggerService.info('Failure metrics successfully updated');
   }
 
   /**
@@ -136,6 +136,8 @@ export class DynamoDbProvider implements MetricPublishable, MetricReadable {
 
     try {
       await this.dbService.updateItem(params);
+
+      this.loggerService.info('Success metrics successfully updated');
     } catch (err) {
       const errorMessage = 'Unable to update success metrics';
 
@@ -146,8 +148,6 @@ export class DynamoDbProvider implements MetricPublishable, MetricReadable {
         this.loggerService.error(errorMessage);
       }
     }
-
-    this.loggerService.info('Success metrics successfully updated');
   }
 
 }
