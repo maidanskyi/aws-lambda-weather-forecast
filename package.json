@@ -26,6 +26,7 @@
   "author": "Roman Maidanskyi",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.32.0",
     "@aws-sdk/client-secrets-manager": "^3.32.0",
     "axios": "^0.21.4",
     "express": "^4.17.1",

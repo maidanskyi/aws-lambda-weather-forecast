@@ -3,4 +3,5 @@ export const TYPES = {
   envConfig        : Symbol.for('envConfig'),
   openWeather      : Symbol.for('openWeather'),
   pinoConsoleLogger: Symbol.for('pinoConsoleLogger'),
+  dynamoDbStorage  : Symbol.for('dynamoDbStorage'),
 };

@@ -1,9 +1,25 @@
 service: aws-lambda-weather-forecast
 frameworkVersion: '2'
+useDotenv: true
 
 provider:
   name: aws
   lambdaHashingVersion: 20201221
+  iam:
+    role:
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - 'secretsmanager:GetSecretValue'
+          Resource:
+            - Ref: SecretsResource
+        - Effect: 'Allow'
+          Action:
+            - '*'
+          Resource:
+            - Fn::GetAtt:
+              - MetricsDatabase
+              - Arn
   ecr:
     images:
       weatherforecast:
@@ -17,3 +33,25 @@ functions:
       - httpApi: '*'
     environment:
       NODE_OPTIONS: --enable-source-maps
+
+resources:
+  Resources:
+    SecretsResource:
+      Type: AWS::SecretsManager::Secret
+      Properties:
+        Description: Secrets needed for this app
+        Name: weatherForecastSecrets
+        SecretString: ''
+    MetricsDatabase:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        TableName: metricsTable
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
