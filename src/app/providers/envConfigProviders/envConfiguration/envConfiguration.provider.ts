@@ -15,12 +15,12 @@ export class EnvConfigurationProvider implements EnvConfigReadable {
    * Returns AWS region
    */
   public getAwsRegion(): string {
-    const region = process.env['AWS_REGION'];
+    const region = process.env['AWS_REGION_NAME'];
 
     if (!region) {
       throw new HttpException(
         500,
-        'AWS_REGION env variable is required',
+        'AWS_REGION_NAME env variable is required',
       );
     }
 

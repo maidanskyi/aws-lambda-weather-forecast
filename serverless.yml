@@ -1,6 +1,10 @@
 service: aws-lambda-weather-forecast
 frameworkVersion: '2'
-useDotenv: true
+
+custom:
+  secretId: 'weatherForecastSecrets'
+  tableName: 'metricsTable'
+  wheatherApiKeyAttribute: 'apiKey'
 
 provider:
   name: aws
@@ -11,8 +15,7 @@ provider:
         - Effect: 'Allow'
           Action:
             - 'secretsmanager:GetSecretValue'
-          Resource:
-            - Ref: SecretsResource
+          Resource: 'arn:aws:secretsmanager:us-east-1:570815509498:secret:weatherForecastSecrets-Ue5JVc'
         - Effect: 'Allow'
           Action:
             - '*'
@@ -33,15 +36,13 @@ functions:
       - httpApi: '*'
     environment:
       NODE_OPTIONS: --enable-source-maps
+      AWS_REGION_NAME: ${aws:region}
+      DB_TABLE_NAME: ${self:custom.tableName}
+      SECRET_ID: ${self:custom.secretId}
+      WEATHER_API_KEY_ATTRIBUTE_NAME: ${self:custom.wheatherApiKeyAttribute}
 
 resources:
   Resources:
-    SecretsResource:
-      Type: AWS::SecretsManager::Secret
-      Properties:
-        Description: Secrets needed for this app
-        Name: weatherForecastSecrets
-        SecretString: ''
     MetricsDatabase:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -51,7 +52,7 @@ resources:
         KeySchema:
           - AttributeName: id
             KeyType: HASH
-        TableName: metricsTable
+        TableName: ${self:custom.tableName}
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
