@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WeatherMetrics service test cases should return metrics with mocked values specified above 1`] = `
+Array [
+  "text/plain; version=0.0.4; charset=utf-8",
+  "# HELP requestCounter Requests statistics
+# TYPE requestCounter counter
+requestCounter{successRequests=\\"12\\",failureRequests=\\"1\\"} 1
+",
+]
+`;
