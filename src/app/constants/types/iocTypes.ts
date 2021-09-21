@@ -4,5 +4,7 @@ export const TYPES = {
   envConfig             : Symbol.for('envConfig'),
   openWeather           : Symbol.for('openWeather'),
   pinoConsoleLogger     : Symbol.for('pinoConsoleLogger'),
+  prometheusMetrics     : Symbol.for('prometheusMetrics'),
   weatherForecastService: Symbol.for('weatherForecastService'),
+  weatherMetricsService : Symbol.for('weatherMetricsService'),
 };
