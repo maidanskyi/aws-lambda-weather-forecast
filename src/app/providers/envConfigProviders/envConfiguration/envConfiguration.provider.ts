@@ -28,6 +28,22 @@ export class EnvConfigurationProvider implements EnvConfigReadable {
   }
 
   /**
+   * Returns AWS region
+   */
+  public getTableName(): string {
+    const tableName = process.env['DB_TABLE_NAME'];
+
+    if (!tableName) {
+      throw new HttpException(
+        500,
+        'DB_TABLE_NAME env variable is required',
+      );
+    }
+
+    return tableName;
+  }
+
+  /**
    * Returns valid log level
    */
   public getLogLevel(): LogLevel {

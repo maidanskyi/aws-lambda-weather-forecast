@@ -5,10 +5,13 @@ import {
   EnvConfigReadable,
   Loggable,
   SecretReadable,
+  MetricPublishable,
+  MetricReadable,
   WeatherForecastGettable
 } from '../interfaces';
 import {
   AwsSecretManagerProvider,
+  DynamoDbProvider,
   EnvConfigurationProvider,
   OpenWeatherProvider,
   PinoConsoleLoggerProvider
@@ -19,6 +22,10 @@ export const container = new Container();
 container
   .bind<SecretReadable>(TYPES.awsSecretManager)
   .to(AwsSecretManagerProvider);
+
+container
+  .bind<MetricPublishable & MetricReadable>(TYPES.dynamoDbStorage)
+  .to(DynamoDbProvider);
 
 container
   .bind<EnvConfigReadable>(TYPES.envConfig)
