@@ -71,7 +71,7 @@ export class OpenWeatherProvider implements WeatherForecastGettable {
     try {
       response = await this.axiosInstance.request({url});
 
-      // await this.metricsStorageService.updateSuccessMetric();
+      await this.metricsStorageService.updateSuccessMetric();
     } catch (err: unknown) {
       await this.metricsStorageService.updateFailureMetric();
 

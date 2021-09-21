@@ -34,6 +34,7 @@
     "inversify": "^5.1.1",
     "inversify-express-utils": "^6.3.2",
     "pino": "^6.13.2",
+    "prom-client": "^14.0.0",
     "reflect-metadata": "^0.1.13",
     "serverless-http": "^2.7.0"
   },

@@ -7,17 +7,22 @@ import {
   SecretReadable,
   MetricPublishable,
   MetricReadable,
+  MetricRegistrable,
   WeatherForecastCallable,
-  WeatherForecastGettable
+  WeatherForecastGettable, MetricGettable
 } from '../interfaces';
 import {
   AwsSecretManagerProvider,
   DynamoDbProvider,
   EnvConfigurationProvider,
   OpenWeatherProvider,
-  PinoConsoleLoggerProvider
+  PinoConsoleLoggerProvider,
+  PrometheusProvider
 } from '../providers';
-import { WeatherForecastService } from '../components';
+import {
+  WeatherForecastService,
+  WeatherMetricsService
+} from '../components';
 
 export const container = new Container();
 
@@ -42,5 +47,13 @@ container
   .to(PinoConsoleLoggerProvider);
 
 container
+  .bind<MetricRegistrable>(TYPES.prometheusMetrics)
+  .to(PrometheusProvider);
+
+container
   .bind<WeatherForecastCallable>(TYPES.weatherForecastService)
   .to(WeatherForecastService);
+
+container
+  .bind<MetricGettable>(TYPES.weatherMetricsService)
+  .to(WeatherMetricsService);
