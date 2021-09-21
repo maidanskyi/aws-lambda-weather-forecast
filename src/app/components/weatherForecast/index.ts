@@ -1,1 +1,2 @@
-export * from './controller';
+export * from './weatherForecast.controller';
+export * from './weatherForecast.service';

@@ -3,7 +3,11 @@ import { SecretsManager } from '@aws-sdk/client-secrets-manager';
 
 import { TYPES } from '../../../constants';
 import { HttpException } from '../../../exceptions';
-import { SecretReadable, Loggable } from '../../../interfaces';
+import {
+  SecretReadable,
+  Loggable,
+  EnvConfigReadable
+} from '../../../interfaces';
 
 /**
  * AWS Secrets Manager provider
@@ -14,24 +18,36 @@ import { SecretReadable, Loggable } from '../../../interfaces';
 @injectable()
 export class AwsSecretManagerProvider implements SecretReadable {
   private readonly loggerService: Loggable;
+  private readonly envConfigService: EnvConfigReadable;
 
   constructor(
     @inject(TYPES.pinoConsoleLogger) loggerService: Loggable,
+    @inject(TYPES.envConfig) envConfigService: EnvConfigReadable,
   ) {
     this.loggerService = loggerService;
+    this.envConfigService = envConfigService;
   }
 
   /**
    * Get secrets form external resource
    */
-  public async getSecretsByName(
-    secretId: string,
-    region: string,
-  ): Promise<Record<string, string>> {
+  public async getSecretsByName(): Promise<Record<string, string>> {
     this.loggerService.debug(
       `${this.constructor.name}.getSecretsByName is handling request`,
     );
-    this.loggerService.debug('method input parameters', { secretId, region });
+
+    if (!this.envConfigService.isProdEnv()) {
+      this.loggerService.debug('Getting secrets in DEV mode...');
+
+      const secrets = this.envConfigService.getWeatherSecrets();
+
+      return this.parseStringifiedSecrets(secrets);
+    }
+
+    const secretId = this.envConfigService.getSecretId();
+    const region = this.envConfigService.getAwsRegion();
+
+    this.loggerService.debug('parameters', { secretId, region });
 
     const stringifiedSecrets = await this.fetchSecrets(secretId, region);
     const parsedSecrets = this.parseStringifiedSecrets(stringifiedSecrets);
@@ -66,12 +82,10 @@ export class AwsSecretManagerProvider implements SecretReadable {
     let data;
     let secrets: string;
 
+    this.loggerService.debug('getting secrets...');
+
     try {
-      this.loggerService.debug('getting secrets...');
-
       data = await awsClient.getSecretValue({ SecretId: secretId });
-
-      this.loggerService.debug('secrets successfully received');
     } catch (err: unknown) {
       if (err instanceof Error) {
         this.loggerService.error(
@@ -102,7 +116,11 @@ export class AwsSecretManagerProvider implements SecretReadable {
       );
     }
 
+    this.loggerService.debug('secrets successfully received');
+
     if ('SecretString' in data && data.SecretString) {
+      this.loggerService.debug('SecretString is in secrets');
+
       secrets = data.SecretString;
     } else
       throw new HttpException(
@@ -127,15 +145,13 @@ export class AwsSecretManagerProvider implements SecretReadable {
       { stringifiedJSON },
     );
 
+    this.loggerService.debug('Parsing secrets...');
+    this.loggerService.debug(`Secrets - ${stringifiedJSON}`);
+
+    let secrets;
+
     try {
-      this.loggerService.debug('Parsing secrets...');
-      this.loggerService.debug(`Secrets - ${stringifiedJSON}`);
-
-      const secrets = JSON.parse(stringifiedJSON);
-
-      this.loggerService.debug('Secrets are parsed');
-
-      return secrets;
+      secrets = JSON.parse(stringifiedJSON);
     } catch (err: unknown) {
       this.loggerService.error('Error parsing secrets received from AWS');
 
@@ -145,5 +161,9 @@ export class AwsSecretManagerProvider implements SecretReadable {
         'PLs, use key/value pairs in your secrets. Don\'t use plain text',
       );
     }
+
+    this.loggerService.debug('Secrets are parsed');
+
+    return secrets;
   }
 }

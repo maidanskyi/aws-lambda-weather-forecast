@@ -7,6 +7,7 @@ import {
   SecretReadable,
   MetricPublishable,
   MetricReadable,
+  WeatherForecastCallable,
   WeatherForecastGettable
 } from '../interfaces';
 import {
@@ -16,6 +17,7 @@ import {
   OpenWeatherProvider,
   PinoConsoleLoggerProvider
 } from '../providers';
+import { WeatherForecastService } from '../components';
 
 export const container = new Container();
 
@@ -38,3 +40,7 @@ container
 container
   .bind<Loggable>(TYPES.pinoConsoleLogger)
   .to(PinoConsoleLoggerProvider);
+
+container
+  .bind<WeatherForecastCallable>(TYPES.weatherForecastService)
+  .to(WeatherForecastService);
