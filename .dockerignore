@@ -9,6 +9,8 @@ npm-debug.log
 .env
 .env.*
 
+src/**/*.test.ts
+
 .serverless
 serverless
 

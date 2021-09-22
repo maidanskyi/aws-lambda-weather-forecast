@@ -1,0 +1,36 @@
+name: lint-test-pr-to-dev
+
+on:
+  pull_request:
+    branches:
+       - dev
+  workflow_dispatch:
+
+jobs:
+  lint-and-test:
+    name: Test on node ${{ matrix.node }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node: [14]
+        os: [ubuntu-latest]
+
+    steps:
+      - name: Get the repo code
+        uses: actions/checkout@v2
+
+      - name: Commit version
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+        run: echo "Commit versio $env.GITHUB_SHA"
+
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: npm ci, run lint and test
+        run: |
+          npm ci
+          npm run lint
+          npm test

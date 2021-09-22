@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` Content-Type should be equal X-Header-Prometheus 1`] = `"X-Header-Prometheus"`;
+
+exports[` response text should be PROMETHEUS-METRICS 1`] = `"PROMETHEUS-METRICS"`;
