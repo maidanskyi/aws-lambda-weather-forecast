@@ -105,7 +105,7 @@ LOG_LEVEL=debug
 NODE_ENV=dev
 DB_TABLE_NAME=metricsTable
 WEATHER_API_KEY_ATTRIBUTE_NAME=apiKey
-WEATHER_SECRETS={"apiKey":"6eabac0aea5f84176ef0ee8777d643c0"}
+WEATHER_SECRETS={"apiKey":"YOUR_KEY_HERE"}
 ```
 
 These env variables specified in '.env' file will be used only in development mode
@@ -149,7 +149,7 @@ docker run \
  -e NODE_ENV=production \
  -e DB_TABLE_NAME=metricsTable \
  -e WEATHER_API_KEY_ATTRIBUTE_NAME=apiKey \
- -e WEATHER_SECRETS='{"apiKey":"6eabac0aea5f84176ef0ee8777d643c0"}' \
+ -e WEATHER_SECRETS='{"apiKey":"YOUR_KEY_HERE"}' \
  --name weather-container \
  weather-forecast
 ```
@@ -230,7 +230,7 @@ provider:
         - Effect: 'Allow'
           Action:
             - 'secretsmanager:GetSecretValue'
-          Resource: 'arn:aws:secretsmanager:us-east-1:570815509894:secret:weatherForecastSecrets-Ue5JVc'
+          Resource: 'YOUR_ARN_HERE'
 ```
 
 This section provides permission to your lambda function to be able to get
