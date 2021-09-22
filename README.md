@@ -201,14 +201,14 @@ ___
 The app has on dependency in production mode. This dependency
 is `AWS Secrets Manager` service. This service is used to store secret data,
 for example, OpenWeather apiKey is stored there.
-> In `development` mode app uses that key from .env file - `WEATHER_SECRETS={"apiKey":"6eabac0aea5f84176ef0ee8777d643c0"}`
+> In `development` mode app uses that key from .env file - `WEATHER_SECRETS={"apiKey":"YUOR_API_KEY"}`
 
 So, to be able to interact with the app when it is deployed to `AWS`,
 please go to your account's secret managed service and create the secret
 as `key/value` pair. Example:
 ```
 key -> apiKey
-value -> 6eabac0aea5f84176ef0ee8777d643c0
+value -> YUOR_API_KEY
 ```
 
 If you want to use another name for key it ok, but do not forget to specify that
